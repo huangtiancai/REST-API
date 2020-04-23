@@ -110,4 +110,5 @@ app.get("/posts/:id", apiGetPostsDetail);
 
 
 ## 优化数据及难度加深
-### 
+### 解决报错
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client

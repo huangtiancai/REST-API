@@ -7,13 +7,24 @@ export const apiGetPosts: RequestHandler = (req, res) => {
 }
 
 export const apiGetPostsDetail: RequestHandler = (req, res) => {
-  // console.log(req.params.id); // 1
+  const selectPost = DataStore.posts.find((element: any) => element.id = req.params.id);
 
-  DataStore.posts.forEach((item: any) => {
-    // console.log(item);
-    if (item.id == req.params.id) {
-      // 实例化、对item进行数据定义
-      res.json(new PostSummary(item));
-    }
-  })
+  // console.log(selectPost);
+
+  if (selectPost) {
+    res.json(new PostSummary(selectPost));
+  } else {
+    res.status(404).json({ status: "failed", message: "post not found" });
+  }
+
+
+  // DataStore.posts.forEach((item: any) => {
+  //   // console.log(item);
+  //   if (item.id == req.params.id) {
+  //     // 实例化、对item进行数据定义
+  //     res.json(new PostSummary(item));
+  //   } else {
+  //     res.status(404).json({ status: "failed", message: "post not found" });
+  //   }
+  // })
 }
