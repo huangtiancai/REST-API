@@ -112,3 +112,18 @@ app.get("/posts/:id", apiGetPostsDetail);
 ## 优化数据及难度加深
 ### 解决报错
 Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+
+优化：apiGetPostsDetail
+```ts
+export const apiGetPostsDetail: RequestHandler = (req, res) => {
+  const selectPost = DataStore.posts.find((element: any) => element.id == req.params.id);
+
+  if (selectPost) {
+    res.json(new PostSummary(selectPost));
+  } else {
+    res.status(404).json({ status: "failed", message: "post not found" });
+  }
+}
+```
+
+### apiGetPostsDetail接口抽离

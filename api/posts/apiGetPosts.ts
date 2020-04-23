@@ -7,9 +7,7 @@ export const apiGetPosts: RequestHandler = (req, res) => {
 }
 
 export const apiGetPostsDetail: RequestHandler = (req, res) => {
-  const selectPost = DataStore.posts.find((element: any) => element.id = req.params.id);
-
-  // console.log(selectPost);
+  const selectPost = DataStore.posts.find((element: any) => element.id == req.params.id);
 
   if (selectPost) {
     res.json(new PostSummary(selectPost));
@@ -18,6 +16,7 @@ export const apiGetPostsDetail: RequestHandler = (req, res) => {
   }
 
 
+  // 报错
   // DataStore.posts.forEach((item: any) => {
   //   // console.log(item);
   //   if (item.id == req.params.id) {
