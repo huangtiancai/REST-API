@@ -9,5 +9,4 @@ export class PostSummary {
     this.title = data.title;
     this.body = data.body
   }
-
 }

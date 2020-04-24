@@ -127,3 +127,18 @@ export const apiGetPostsDetail: RequestHandler = (req, res) => {
 ```
 
 ### apiGetPostsDetail接口抽离
+api 抽离
+apiGetPosts
+apiGetPostsDetail
+
+postDetail.ts
+todo.ts
+
+posts.json
+todos.json
+
+
+## post数据到服务器
+
+
+## 删除 和更新数据

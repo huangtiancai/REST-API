@@ -1,5 +1,6 @@
 import express from 'express';
-import { apiGetPosts, apiGetPostsDetail } from "./api/posts/apiGetPosts";
+import { apiGetPosts } from "./api/posts/apiGetPosts";
+import { apiGetPostsDetail } from "./api/posts/apiGetPostsDetail";
 
 const app = express();
 
@@ -17,9 +18,7 @@ app.get("/", (req, res, next) => {
 app.get("/posts", apiGetPosts);
 app.get("/posts/:id", apiGetPostsDetail);
 
-app.post("/tours", (req, res, next) => {
-  res.send("post tours...");
-});
+app.post("/posts", apiGetPostsDetail);
 
 app.listen(process.env.PORT || 8091, function () {
   console.log("Server started...");
