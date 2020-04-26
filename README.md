@@ -62,6 +62,14 @@ app.get("/posts", (req, res, next) => {
 });
 ```
 
+```
+// console.log(DataStore.posts);
+// 将一个 JavaScript 值（对象或者数组）转换为一个 JSON 字符串
+// console.log(JSON.stringify(DataStore.posts));
+// 用来解析JSON字符串，构造由字符串描述的JavaScript值或对象
+// console.log(JSON.parse(JSON.stringify(DataStore.posts)));
+```
+
 ## 优化请求和获取数据
 ### 代码抽离
 server.js
@@ -138,7 +146,74 @@ posts.json
 todos.json
 
 
-## post数据到服务器
 
+## post数据到服务器
+1. 获取请求的POST数据 安装中间件body-parser
+```bash
+npm i body-parser --save
+```
+2. 生成id uuid
+```bash
+生产环境
+npm i uuid --save
+开发环境下
+npm i @types/uuid -D
+```
+
+调整posts id 数据类型 id: number => id: string
+
+```ts
+app.post("/posts", apiCreatePost);
+```
 
 ## 删除 和更新数据
+DELETE localhost:8091/posts/0dacb903-1313-473e-8e8c-d5b42b197968
+PUT    localhost:8091/posts/1
+
+## 手写中间件并理解中间件的作用
+```ts
+// 自定义中间件
+const logger: express.RequestHandler = (req, res, next) => {
+  console.log(new Date() + " - " + req.method + " - " + "Request to " + req.path);
+  // 执行下一个需要执行的内容
+  next();
+}
+// 相当于每个路由前加上一个logger
+app.use(logger);
+```
+
+```ts
+// 自定义验证中间件
+const authenticator: CustomRequestHandler = (req, res, next) => {
+  const username = 'tom';
+  req.user = username;  // express.RequestHandler中没有user属性 => 自定义 CustomRequestHandler
+  next();
+}
+
+// 自定义日志中间件
+const logger: CustomRequestHandler = (req, res, next) => {
+  console.log("user:" + req.user + " - " + new Date() + " - " + req.method + " - " + "Request to " + req.path);
+  // 执行下一个需要执行的内容
+  next();
+}
+
+// 相当于每个路由前加上一个logger
+app.use(authenticator);
+app.use(logger);
+```
+
+
+
+NodeJS+Typescript实战RESTFUL-API接口-图片接口
+
+## 加深数据难度（增加图片）
+
+## 添加图片
+安装multer模块
+```bash
+npm install --save multer
+```
+
+
+
+
