@@ -6,7 +6,7 @@ const static_1 = require("./general/static");
 exports.apiUploadImage = (req, res) => {
     // console.log(req.params.id);
     const postIndex = data_1.DataStore.posts.findIndex((item) => item.id == req.params.id);
-    console.log(postIndex);
+    // console.log(postIndex);
     if (postIndex == -1) {
         res.status(404).json({ status: "error", message: "post not found" });
     }

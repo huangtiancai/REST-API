@@ -9,7 +9,7 @@ export const apiUploadImage: RequestHandler = (req, res) => {
 
   const postIndex = DataStore.posts.findIndex((item: any) => item.id == req.params.id);
 
-  console.log(postIndex);
+  // console.log(postIndex);
 
   if (postIndex == -1) {
     res.status(404).json({ status: "error", message: "post not found" });

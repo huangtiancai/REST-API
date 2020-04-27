@@ -23,7 +23,7 @@ export const apiGetPostsDetail: RequestHandler = (req, res) => {
     });
 
     // 打印 imgURLs
-    console.log(imgURLs);
+    // console.log(imgURLs);
 
     // 获取环境(开发 or 生产)
     // console.log(req.app.get("env")); // development

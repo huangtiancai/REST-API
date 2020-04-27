@@ -47,7 +47,11 @@ app.get("/", (req, res, next) => {
 
 // 请求中可以放入中间件
 // app.get("/posts", logger, apiGetPosts);  // 先打印logger => 再执行请求方法
+
+// 请求所有posts
 app.get("/posts", apiGetPosts);
+
+// 根据 id 请求 posts
 app.get("/posts/:id", apiGetPostsDetail);
 
 // POST数据
@@ -61,6 +65,8 @@ app.put("/posts/:id", apiUpdatePost);
 
 // 上传图片
 app.post("/posts/:id/img", apiUploadImage);
+
+// 重启服务 http://localhost:8091/posts/1
 
 
 
