@@ -9,6 +9,8 @@ export const apiCreatePost: RequestHandler = (req, res) => {
   // 前端传递到后端的数据
   // console.log(req.body); // undefined
 
+  // const 
+
   // 构造 newPost 对象 类型：NewPost(定义接口) 
   const newPost: NewPost = {
     id: uuid(), // 生成唯一id值

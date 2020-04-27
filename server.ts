@@ -8,6 +8,7 @@ import { apiDeletePost } from "./api/posts/apiDeletePost";
 import { apiUpdatePost } from "./api/posts/apiUpdatePost";
 import { apiUploadImage } from "./api/posts/apiUploadImage";
 import { CustomRequestHandler } from "./interface/express";
+import { apiErrorHandler } from './api/posts/general/errorHandler';
 
 const app = express();
 
@@ -67,6 +68,9 @@ app.put("/posts/:id", apiUpdatePost);
 app.post("/posts/:id/img", apiUploadImage);
 
 // 重启服务 http://localhost:8091/posts/1
+
+// 处理错误信息
+app.use(apiErrorHandler);
 
 
 

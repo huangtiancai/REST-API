@@ -12,6 +12,7 @@ const apiCreatePost_1 = require("./api/posts/apiCreatePost");
 const apiDeletePost_1 = require("./api/posts/apiDeletePost");
 const apiUpdatePost_1 = require("./api/posts/apiUpdatePost");
 const apiUploadImage_1 = require("./api/posts/apiUploadImage");
+const errorHandler_1 = require("./api/posts/general/errorHandler");
 const app = express_1.default();
 // parse application/x-www-form-urlencoded 解析"application/x-www-form-urlencoded"格式
 app.use(body_parser_1.default.urlencoded({ extended: false }));
@@ -53,6 +54,8 @@ app.put("/posts/:id", apiUpdatePost_1.apiUpdatePost);
 // 上传图片
 app.post("/posts/:id/img", apiUploadImage_1.apiUploadImage);
 // 重启服务 http://localhost:8091/posts/1
+// 处理错误信息
+app.use(errorHandler_1.apiErrorHandler);
 app.listen(process.env.PORT || 8091, function () {
     console.log("Server started...");
 });

@@ -9,6 +9,7 @@ const v4_1 = __importDefault(require("uuid/v4"));
 exports.apiCreatePost = (req, res) => {
     // 前端传递到后端的数据
     // console.log(req.body); // undefined
+    // const 
     // 构造 newPost 对象 类型：NewPost(定义接口) 
     const newPost = {
         id: v4_1.default(),
