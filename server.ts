@@ -125,12 +125,10 @@ const dataFormat = '\\d{4}-\\d{1,2}-\\d{1,2}';
 app.get(`/booking/:formDate(${dataFormat})/:toDate(${dataFormat})`, (req, res, next) => {
   res.json(req.params);
 });
-
 // {
 //   "formDate": "2020-01-01",
 //     "toDate": "2021-01-01"
 // }
-
 
 
 app.get(`/booking/:formDate/:toDate)`, (req, res, next) => {
