@@ -9,6 +9,8 @@ import { apiUpdatePost } from "./api/posts/apiUpdatePost";
 import { apiUploadImage } from "./api/posts/apiUploadImage";
 import { CustomRequestHandler } from "./interface/express";
 import { apiErrorHandler } from './api/posts/general/errorHandler';
+import { APIError } from './model/shared/message';
+import { dateParam } from "./api/posts/general/reqParams/dateParam";
 
 const app = express();
 
@@ -71,6 +73,72 @@ app.post("/posts/:id/img", apiUploadImage);
 
 // 处理错误信息
 app.use(apiErrorHandler);
+
+
+// 剖析Request对象
+// GET http://localhost:8091/posts/id2/todos?start=5
+
+/*
+  GET:req.method
+  http:req.protocol
+  lhost:req.hostname
+  port:environment
+  posts/id2/todos:req.originalURL
+  id2:req.params = {postID:id2}
+  ?start=5:req.query = {star：5}
+  req.app
+  req.body
+  req.headers
+  req.secure,req.cokies,req.fresh...
+*/
+
+app.use((req, res, next) => {
+  if (req.accepts("application/json")) {
+    next()
+  } else {
+    next(new APIError(
+      "Content Type Not supported",
+      "This API only supports application/json",
+      400)
+    );
+  }
+})
+
+// req.headers
+app.get('/headers', (req, res, next) => {
+  res.json(req.headers);
+});
+
+app.post('/headers', (req, res, next) => {
+  res.json(req.headers);
+});
+
+
+// 请求参数深入讲解
+app.get("/booking/:id", (req, res, next) => {
+  res.json(req.params);
+});
+
+
+// 设置请求参数格式
+const dataFormat = '\\d{4}-\\d{1,2}-\\d{1,2}';
+app.get(`/booking/:formDate(${dataFormat})/:toDate(${dataFormat})`, (req, res, next) => {
+  res.json(req.params);
+});
+
+// {
+//   "formDate": "2020-01-01",
+//     "toDate": "2021-01-01"
+// }
+
+
+
+app.get(`/booking/:formDate/:toDate)`, (req, res, next) => {
+  res.json(req.params);
+});
+
+app.param("formDate", dateParam);
+app.param("toDate", dateParam);
 
 
 

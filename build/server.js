@@ -13,6 +13,8 @@ const apiDeletePost_1 = require("./api/posts/apiDeletePost");
 const apiUpdatePost_1 = require("./api/posts/apiUpdatePost");
 const apiUploadImage_1 = require("./api/posts/apiUploadImage");
 const errorHandler_1 = require("./api/posts/general/errorHandler");
+const message_1 = require("./model/shared/message");
+const dateParam_1 = require("./api/posts/general/reqParams/dateParam");
 const app = express_1.default();
 // parse application/x-www-form-urlencoded 解析"application/x-www-form-urlencoded"格式
 app.use(body_parser_1.default.urlencoded({ extended: false }));
@@ -56,6 +58,54 @@ app.post("/posts/:id/img", apiUploadImage_1.apiUploadImage);
 // 重启服务 http://localhost:8091/posts/1
 // 处理错误信息
 app.use(errorHandler_1.apiErrorHandler);
+// 剖析Request对象
+// GET http://localhost:8091/posts/id2/todos?start=5
+/*
+  GET:req.method
+  http:req.protocol
+  lhost:req.hostname
+  port:environment
+  posts/id2/todos:req.originalURL
+  id2:req.params = {postID:id2}
+  ?start=5:req.query = {star：5}
+  req.app
+  req.body
+  req.headers
+  req.secure,req.cokies,req.fresh...
+*/
+app.use((req, res, next) => {
+    if (req.accepts("application/json")) {
+        next();
+    }
+    else {
+        next(new message_1.APIError("Content Type Not supported", "This API only supports application/json", 400));
+    }
+});
+// req.headers
+app.get('/headers', (req, res, next) => {
+    res.json(req.headers);
+});
+app.post('/headers', (req, res, next) => {
+    res.json(req.headers);
+});
+// 请求参数深入讲解
+app.get("/booking/:id", (req, res, next) => {
+    res.json(req.params);
+});
+// 设置请求参数格式
+const dataFormat = '\\d{4}-\\d{1,2}-\\d{1,2}';
+app.get(`/booking/:formDate(${dataFormat})/:toDate(${dataFormat})`, (req, res, next) => {
+    res.json(req.params);
+});
+// {
+//   "formDate": "2020-01-01",
+//     "toDate": "2021-01-01"
+// }
+app.get(`/booking/:formDate/:toDate)`, (req, res, next) => {
+    res.json(req.params);
+});
+app.param("formDate", dateParam_1.dateParam);
+app.param("toDate", dateParam_1.dateParam);
 app.listen(process.env.PORT || 8091, function () {
     console.log("Server started...");
 });
